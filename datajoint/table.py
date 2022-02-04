@@ -420,7 +420,8 @@ class Table(QueryExpression):
                     total += count
                     if (verbose or safe) and count:
                         print('{table}: {count} items'.format(table=name, count=count))
-        except:
+        except BaseException as e:
+            logger.warning(e)
             # Delete failed, perhaps due to insufficient privileges. Cancel transaction.
             if not already_in_transaction:
                 conn.cancel_transaction()
